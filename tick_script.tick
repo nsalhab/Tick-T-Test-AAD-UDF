@@ -1,6 +1,6 @@
 dbrp "printer"."autogen"
 
-// This TICKscript monitors the three values for the job,
+// This TICKscript monitors the two values for the job,
 // and triggers alerts if the values start to experience abnormal behavior.
 
 // Define our desired significance level.
@@ -9,42 +9,33 @@ var alpha = 0.001
 // Select the measurements
 var data = stream
     |from()
-        .measurement('temperatures')
+        .measurement('pdcp')
     |window()
         .period(5m)
         .every(5m)
 
 data
-    //Run our tTest UDF on the hotend temperature
+    //Run our tTest UDF on the first value (firstvalue)
     @tTest()
-        // specify the hotend field
-        .field('hotend')
+        // specify the firstvalue field
+        .field('firstvalue')
         // Keep a 1h rolling window
         .size(3600)
         // pass in the alpha value
         .alpha(alpha)
     |alert()
-        .id('hotend')
+        .id('firstvalue')
         .crit(lambda: "pvalue" < alpha)
-        .log('/tmp/kapacitor_udf/hotend_failure.log')
+        .log('/tmp/kapacitor_udf/firstvalue_failure.log')
 
-// Do the same for the bed and air temperature.
+// Do the same for second value (secondvalue)
 data
     @tTest()
-        .field('bed')
+        .field('secondvalue')
         .size(3600)
         .alpha(alpha)
     |alert()
-        .id('bed')
+        .id('secondvalue')
         .crit(lambda: "pvalue" < alpha)
-        .log('/tmp/kapacitor_udf/bed_failure.log')
+        .log('/tmp/kapacitor_udf/secondvalue_failure.log')
 
-data
-    @tTest()
-        .field('air')
-        .size(3600)
-        .alpha(alpha)
-    |alert()
-        .id('air')
-        .crit(lambda: "pvalue" < alpha)
-        .log('/tmp/kapacitor_udf/air_failure.log')
