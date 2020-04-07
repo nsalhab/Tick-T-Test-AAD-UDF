@@ -150,6 +150,10 @@ class MovingStats(object):
     Calculate the moving mean and variance of a window.
     Uses Welford's Algorithm.
     """
+	# Welford's algorithm allows to compute the variance in a single pass, 
+	# inspecting each value x_i only once; 
+	# this is interesting, when the data are being collected without enough storage to keep all the values, 
+	# or when costs of memory access dominate those of computation.
     def __init__(self, size):
         """
         Create new MovingStats object.
