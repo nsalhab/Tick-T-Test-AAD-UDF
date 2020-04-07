@@ -5,6 +5,10 @@ dbrp "printer"."autogen"
 
 // Define our desired significance level.
 var alpha = 0.001
+// The p-value is defined as the probability, under the null hypothesis H0 as opposed to Ha
+// denoting the alternative hypothesis) about the unknown distribution F of the random variable X, 
+// for the variate to be observed as a value equal to or more extreme than the value observed.
+
 
 // The smaller the p-value, the higher the significance 
 // This is because, p-value tells the investigator that the hypothesis under consideration may not adequately explain the observation. 
