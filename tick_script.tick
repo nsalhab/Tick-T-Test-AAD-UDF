@@ -6,6 +6,29 @@ dbrp "printer"."autogen"
 // Define our desired significance level.
 var alpha = 0.001
 
+// The smaller the p-value, the higher the significance 
+// This is because, p-value tells the investigator that the hypothesis under consideration may not adequately explain the observation. 
+// The null hypothesis H is rejected if any of these probabilities is less than or equal to a small, 
+// fixed but arbitrarily pre-defined threshold value α, which is referred to as the level of significance. 
+// Unlike the p-value, the α level is not derived from any observational data and does not depend on the underlying hypothesis;
+
+// The statement being tested in a test of statistical significance is called the null hypothesis.
+// The null hypothesis is a statement of 'no effect' or 'no difference'. It is often symbolized as H0. 
+// The procedure for deciding goes like this: 
+// Take a random sample from the population. 
+// If the sample data are consistent with the null hypothesis, 
+// then do not reject the null hypothesis; 
+// if the sample data are inconsistent with the null hypothesis, 
+// then reject the null hypothesis and conclude that the alternative hypothesis is true.
+
+// H0: μ1 = μ2 or H0: (μ1 - μ2 = 0)
+
+// where
+
+//    H0 = the null hypothesis,
+//    μ1 = the mean of population 1, and
+//    μ2 = the mean of population 2.
+
 // Select the measurements
 var data = stream
     |from()
@@ -27,6 +50,9 @@ data
         .id('firstvalue')
         .crit(lambda: "pvalue" < alpha)
         .log('/tmp/kapacitor_udf/firstvalue_failure.log')
+		// If the p-value is less than the chosen significance level (α), 
+		// this suggests that the observed data is sufficiently inconsistent with the null hypothesis 
+		// and that the null hypothesis may be rejected. 
 
 // Do the same for second value (secondvalue)
 data
