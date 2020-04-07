@@ -1,9 +1,12 @@
 #https://github.com/nsalhab/Tick-T-Test-AAD-UDF
 
 What is this about?
-This is the code of our custom anomaly detection algorithm.
-Welch's t-test defines the statistic t by the following formula:
+This is the code of a custom anomaly detection algorithm using
+Welch's t-test for the null hypothesis H0.
+It consists of two-sample location test, used to validate the hypothesis that the related two populations have equal means.
 
+
+The T-Test code is implemented in Python and uses the scipy stats library.
 
 Environment:
 Kapacitor is designed to integrate easily with any algorithm that fits specific domains.
@@ -11,7 +14,7 @@ In Kapacitor's jargon, these custom algorithms are called User Defined Functions
 
 How does the algorithm work?
 To keep our anomaly detection algorithm simple, let’s compute a p-value for each window of data we receive, and then emit a single data point with that p-value. 
-To compute the p-value, using Welch’s t-test. 
+To compute the p-value, we use Welch’s t-test. 
 For a null hypothesis, we will state that a new window is from the same population as the historical windows. 
 If the p-value drops low enough, we can reject the null hypothesis and conclude that the window must be from something different than the historical data population, or an anomaly. 
 
