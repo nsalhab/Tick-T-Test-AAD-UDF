@@ -1,24 +1,22 @@
-#https://github.com/nsalhab/Tick-T-Test-AAD-UDF
-
-What is this about?
+# Tick T-Test Autonomous Anomaly Detector User Defined Function (Tick-T-Test-AAD-UDF)
+**What is this about?**
 This is the code of a custom anomaly detection algorithm using
 Welch's t-test for the null hypothesis H0.
 It consists of two-sample location test, used to validate the hypothesis that the related two populations have equal means.
 
-
 The T-Test code is implemented in Python and uses the scipy stats library.
 
-Environment:
+**Environment:**
 Kapacitor is designed to integrate easily with any algorithm that fits specific domains.
 In Kapacitor's jargon, these custom algorithms are called User Defined Functions (UDFs).
 
-How does the algorithm work?
+**How does the algorithm work?**
 To keep our anomaly detection algorithm simple, let’s compute a p-value for each window of data we receive, and then emit a single data point with that p-value. 
 To compute the p-value, we use Welch’s t-test. 
 For a null hypothesis, we will state that a new window is from the same population as the historical windows. 
 If the p-value drops low enough, we can reject the null hypothesis and conclude that the window must be from something different than the historical data population, or an anomaly. 
 
-What about the operation of the UDF?
+**What about the operation of the UDF?**
 
 Kapacitor will spawn a process called an agent. 
 The agent is responsible for describing what options it has, and then initializing itself with a set of options. 
@@ -29,7 +27,7 @@ For this algorithm, we will be using the Python agent.
 
 
 
-How to integrate this?
+***How to integrate this?***
 In order to configure Kapacitor for our UDF, we need to add this snippet in the file called 
 kapacitor.conf
 to your Kapacitor configuration file (typically located at /etc/kapacitor/kapacitor.conf).In the configuration we called the function tTest. That is also how we will reference it in the TICKscript.
